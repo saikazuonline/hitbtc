@@ -1,1 +1,1 @@
-# poloniex
+# hitbtc
