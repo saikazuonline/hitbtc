@@ -1,12 +1,17 @@
 import hitBtc
+import configparser
 from module import *
 
 if __name__ == "__main__":
 
+    # START API情報
+    conf = configparser.ConfigParser()
+    conf.read('../info/setting.conf')
     # publicKey
-    public_key = "76d97819b9ee9ac6d677ba6f6af1d0f7"
+    public_key = conf.get('INFO', 'API_KEY')
     # secretKey
-    secret = "f9a571b58d61f8d4ca4eb615962eba12"
+    secret = conf.get('INFO', 'SECRET_KEY')
+    # END API情報
 
     # 実行情報
     client = hitBtc.Client("https://api.hitbtc.com", public_key, secret)
