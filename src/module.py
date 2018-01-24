@@ -56,6 +56,7 @@ def textReadForCurrency():
 def comparison(afCurrencys, beCurrencys):
 
     comparisonFlg = False
+    currencys = []
 
     for afCurrency in afCurrencys:
         hitFlg = False
@@ -65,10 +66,13 @@ def comparison(afCurrencys, beCurrencys):
         if(hitFlg == False):
             print('新通貨があります: ' + afCurrency)
             comparisonFlg = True
+            currencys.append(afCurrency)
     if(comparisonFlg == False):
         print('新通貨はありませんでした。')
 
+    return currencys
 
+def calculation(client, currency):
 
-
-
+    eth_btc = client.get_orderbook(currency + 'BTC')
+    print(eth_btc)

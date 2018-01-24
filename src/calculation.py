@@ -16,9 +16,4 @@ if __name__ == "__main__":
     # 実行情報
     client = hitBtc.Client("https://api.hitbtc.com", public_key, secret)
 
-    afCurrency = getAfterCurrencys(client)
-    beCurrency = textReadForCurrency()
-
-    currencys = comparison(afCurrency, beCurrency)
-
-    print(currencys)
+    calculation(client, 'ETH')
