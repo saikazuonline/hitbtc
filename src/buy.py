@@ -3,7 +3,6 @@ import configparser
 from module import *
 
 if __name__ == "__main__":
-
     # START API情報
     conf = configparser.ConfigParser()
     conf.read('../info/setting.conf')
@@ -18,4 +17,4 @@ if __name__ == "__main__":
 
     orderInfo = calculation(conf, client, 'TRX')
 
-    print(orderInfo)
+    buy(client, orderInfo)

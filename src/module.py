@@ -1,4 +1,6 @@
+import uuid
 import hitBtc
+from decimal import *
 
 def getBalances(client):
     # 一覧を取得
@@ -17,9 +19,6 @@ def getAfterCurrencys(client):
         afCurrency.append(balance['currency'])
 
     return afCurrency
-
-
-
 
 def textWriteForCurrency(balances):
 
@@ -72,7 +71,40 @@ def comparison(afCurrencys, beCurrencys):
 
     return currencys
 
-def calculation(client, currency):
+def calculation(conf, client, currency):
 
-    eth_btc = client.get_orderbook(currency + 'BTC')
-    print(eth_btc)
+    symbol = currency + 'BTC'
+
+    orderbook = client.get_orderbook(symbol)
+
+    client_order_id = uuid.uuid4().hex
+    btc_usdt = Decimal(conf.get('VALUE', 'BTC_USDT')) # TODO 可変でもってこれるようにする
+    best_price = Decimal(orderbook['bid'][0]['price'])
+    doller = Decimal(conf.get('VALUE', 'DOLLER'))
+
+    symbolDoll = btc_usdt * best_price
+    quentity = round((doller / symbolDoll), 0)
+
+    orderInfo = {'client_order_id':client_order_id, 'symbol':symbol, 'price': best_price, 'quentity': quentity}
+
+    return orderInfo
+
+def buy(client, orderInfo):
+
+    print(orderInfo)
+
+    order = client.new_order(orderInfo['client_order_id'], orderInfo['symbol'], 'buy', orderInfo['quentity'], orderInfo['price'])
+    if 'error' not in order:
+        if order['status'] == 'filled':
+            print("Order filled", order)
+        elif order['status'] == 'new' or order['status'] == 'partiallyFilled':
+            print("Waiting order...")
+            for k in range(0, 3):
+                order = client.get_order(client_order_id, 20000)
+                print(order)
+
+                if 'error' in order or ('status' in order and order['status'] == 'filled'):
+                    break
+
+
+
