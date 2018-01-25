@@ -106,5 +106,12 @@ def buy(client, orderInfo):
                 if 'error' in order or ('status' in order and order['status'] == 'filled'):
                     break
 
+            # cancel order if it isn't filled
+            if 'status' in order and order['status'] != 'filled':
+                cancel = client.cancel_order(client_order_id)
+                print('Cancel order result', cancel)
+    else:
+        print(order['error'])
+
 
 

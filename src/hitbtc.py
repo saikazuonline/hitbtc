@@ -115,7 +115,7 @@ if __name__ == "__main__":
             elif order['status'] == 'new' or order['status'] == 'partiallyFilled':
                 print("Waiting order...")
                 for k in range(0, 3):
-                    order = client.get_order(client_order_id, 20nbbbbbbbbbbnbnbbbbbbbbbbb000)
+                    order = client.get_order(client_order_id, 20000)
                     print(order)
 
                     if 'error' in order or ('status' in order and order['status'] == 'filled'):
@@ -150,4 +150,4 @@ if __name__ == "__main__":
                     transaction = client.get_transaction(transaction_id)
                     print("Payout info", transaction)
             else:
-                print(payout['error'])___________________
+                print(payout['error'])

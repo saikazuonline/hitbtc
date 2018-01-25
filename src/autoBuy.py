@@ -2,9 +2,7 @@ import hitBtc
 import configparser
 from module import *
 
-# このファイルが実行された時のみ実行
 if __name__ == "__main__":
-
     # START API情報
     conf = configparser.ConfigParser()
     conf.read('../info/setting.conf')
@@ -12,11 +10,16 @@ if __name__ == "__main__":
     public_key = conf.get('INFO', 'API_KEY')
     # secretKey
     secret = conf.get('INFO', 'SECRET_KEY')
-    # END
+    # END API情報
 
     # 実行情報
     client = hitBtc.Client("https://api.hitbtc.com", public_key, secret)
 
-    beforeCurrency = []
+    afCurrency = getAfterCurrencys(client)
+    beCurrency = textReadForCurrency()
 
-    textWriteForCurrency(getBalances(client))
+    currencys = comparison(afCurrency, beCurrency)
+
+    for currency in currencys:
+        orderInfo = calculation(conf, client, currency)
+        buy(client, orderInfo)
