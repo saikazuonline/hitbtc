@@ -4,5 +4,5 @@ include/
 pip-selfcheck.json
 lib/
 .python
-info/setting.conf
+info/
 data/bitcoin.txt
