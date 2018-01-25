@@ -4,5 +4,3 @@ include/
 pip-selfcheck.json
 lib/
 .python
-data/
-info/

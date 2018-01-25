@@ -23,3 +23,5 @@ if __name__ == "__main__":
     for currency in currencys:
         orderInfo = calculation(conf, client, currency)
         buy(client, orderInfo)
+
+    textWriteForCurrency(getBalances(client))
