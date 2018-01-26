@@ -91,7 +91,7 @@ def calculation(conf, client, currency):
 
 def buy(client, orderInfo):
 
-    print(orderInfo)
+    client_order_id = uuid.uuid4().hex
 
     order = client.new_order(orderInfo['client_order_id'], orderInfo['symbol'], 'buy', orderInfo['quentity'], orderInfo['price'])
     if 'error' not in order:
